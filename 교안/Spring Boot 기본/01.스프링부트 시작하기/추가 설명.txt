@@ -1,0 +1,27 @@
+1.
+프로젝트 우클릭 -> build path -> configure build path -> Project Facets
+-> apply -> Dynamic Web Module 버전을 맞춰야함
+
+그런데! 여기서 변경하는것은 매번 들어올때마다 체크를 수시로 변경해야함
+
+그러므로 build.gradle에서 
+
+facet 설정문을 써주면 고정됨
+eclipse.wtp.facet {
+    facet name: 'jst.web', version: '5.0'
+}
+
+2.
+window -> preference -> java -> Editor -> Typing -> I string literals
+-> Escape text when pasting into a string literal 체크 해제
+
+
+
+-----------------
+1. endoding -> utf8로
+
+2. JRE 버전 맞추기
+
+3. 폰트 바꾸기
+
+4. 가이드선
