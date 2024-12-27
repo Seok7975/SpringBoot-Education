@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- #리스트 부분 -->
+    <header>
+        <h2>게시판-목록</h2>
+    </header>
+    <nav>
+        <a href="/write">글쓰기</a>
+    </nav>
+    <article>
+        <table border='1'>
+          <thead>
+            <tr>
+                <th>No</th>
+                <th>Title</th>
+                <th>Writer</th>
+                <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>1</td>
+                <td>오늘은 React공부하는날</td>
+                <td>낙짜쌤</td>
+                <td>2023-01-01</td>
+            </tr>
+          </tbody>
+        </table>
+    </article>
+
+    <hr>
+
+    <!-- #읽기 부분 -->
+    <header>
+      <h2>게시판-읽기</h2>
+    </header>
+    <nav>
+      <a href="/list">목록</a>&nbsp;&nbsp;
+      <a href="/edit/1">수정</a>&nbsp;&nbsp;
+      <a href="/delete/1">삭제</a>
+    </nav>
+    <article>
+      <table border='1'>
+        <tbody>
+          <tr>
+            <th>작성자</th>
+            <td>성유겸</td>
+          </tr>
+          <tr>
+            <th>제목</th>
+            <td>오늘은 React공부하는날</td>
+          </tr>
+          <tr>
+            <th>작성일</th>
+            <td>2023-05-05</td>
+          </tr>
+          <tr>
+            <th>내용</th>
+            <td>React는 좋지만 어려워요ㅜㅜ</td>
+          </tr>
+        </tbody>
+      </table> 
+    </article>
+
+    <hr>
+
+    <!-- #작성 부분 -->
+    <header>
+        <h2>게시판-작성</h2>
+    </header>
+    <nav>
+        <a href="/list">목록</a>
+    </nav>
+    <article>
+    <form>
+      <table border='1'>
+        <tbody>
+          <tr>
+            <th>작성자</th>
+            <td><input type='text' name="writer" /></td>
+          </tr>
+          <tr>
+            <th>제목</th>
+            <td><input type='text' name="title"/></td>
+          </tr>
+          <tr>
+            <th>내용</th>
+            <td><textarea name="contents" cols='22' rows='3'></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+      <input type="submit" value="전송">
+    </form>    
+    </article>
+</body>
+</html>

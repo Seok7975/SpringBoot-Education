@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 인터페이스를 namespace로 지정한다.  -->
+<mapper namespace="com.edu.springboot.restboard.IBoardService"> 
+ 	
+ 	<!-- 각 페이지의 목록 반환 --> 	
+	<select id="list" 
+		parameterType="com.edu.springboot.restboard.ParameterDTO" 
+		resultType="com.edu.springboot.restboard.BoardDTO">
+		SELECT * FROM (
+		    SELECT Tb.*, rownum rNum FROM (
+		        SELECT * FROM board ORDER BY num DESC
+		    ) Tb
+		)
+		WHERE rNum BETWEEN #{start} AND #{end}
+	</select>
+
+	<!-- 검색하기 -->
+	<select id="search" 
+		parameterType="com.edu.springboot.restboard.ParameterDTO" 
+		resultType="com.edu.springboot.restboard.BoardDTO">
+		SELECT * FROM board 
+		<!-- 검색어가 있는 경우 where절을 추가한다.  -->  
+		<if test="searchWord!=null">
+			WHERE
+			<!--  
+			가령 '하늘 땅'을 입력했다면 
+			(title like '%하늘%' or title like '%땅%')
+			과 같이 쿼리문이 생성된다. 
+			-->
+			<foreach collection="searchWord" item="str" 
+				open="(" close=")" separator="or">
+				${searchField} like '%'||#{str}||'%'
+			</foreach> 
+		</if>					
+        ORDER BY num DESC
+	</select>
+
+	<!-- 내용보기 -->
+	<select id="view" 
+		parameterType="com.edu.springboot.restboard.ParameterDTO" 
+		resultType="com.edu.springboot.restboard.BoardDTO">  
+		SELECT * FROM board WHERE num=#{num}
+	</select>	 
+	
+	<!-- 글쓰기 -->
+	<insert id="write" 
+		parameterType="com.edu.springboot.restboard.BoardDTO">
+		INSERT INTO board 
+			(num, title, content, id, visitcount)
+		VALUES 
+			(seq_board_num.nextval, #{title}, #{content}, #{id}, 0)
+	</insert>	
+</mapper>
+
+
+

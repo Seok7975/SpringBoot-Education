@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #boardTable{
+            border: 1px solid gray; border-collapse: collapse; width: 90%;
+            margin-bottom: 10px;
+        }
+        #boardTable tr{
+            text-align: center;
+        }
+        #boardTable th{
+            background-color: azure;
+        }
+        #boardTable th, td{
+            border: 1px solid gray;
+        }
+        /* #boardTable.emptyList{
+            text-align: center;
+        } */
+        #boardTable td.subject{
+            text-align: left;
+        }
+        #btn{height: 100px;}
+    </style>
+</head>
+<body>
+    <h2>읽기(Read) - 댓글작성</h2>
+    <form name="writeFrm">
+    <input type="hidden" name="num" value="<%=num %>" />
+    <table id="boardTable">
+        <tr>
+            <th>번호</th>
+            <td>100</td>
+            <th>작성자</th>
+            <td>낙짜쌤</td>
+        </tr>
+        <tr>
+            <th>작성일</th>
+            <td>2020.02.22</td>
+            <th>조회수</th>
+            <td>99</td>
+        </tr>
+        <tr>
+            <th>제목</th>
+            <td colspan="3" class="subject">오늘은 리엑트로 정했다.</td>
+        </tr>
+        <tr> 
+            <th>내용</th>
+            <td colspan="3" class="subject">
+                읽기 부분은 구현하지 않습니다. <br>
+                아래 댓글 부분을 구현하면 됩니다. 
+            </td>            
+        </tr>
+        <tr>
+            <td colspan="4" align="center">
+                <button type="button" onclick="">수정하기</button>							
+                <button type="button" onclick="">삭제하기</button>
+                <button type="button" onclick="">리스트</button>
+            </td>
+        </tr>
+    </table>	
+    </form>
+
+    <hr>
+
+    <!-- 
+        번호는 1부터 자동부여.
+        날짜는 Date객체 사용하여 현재날짜 및 시간 입력
+        작성자와 내용은 사용자가 입력.
+        수정 버튼 누르면 작성폼에 기존내용 로드
+        삭제는 confirm창으로 물어본 후 처리 
+     -->
+    <!-- 반복 -->
+    <table id="boardTable">
+        <tr>
+            <td>10</td>
+            <td>Writer:낙짜샘</td>
+            <td>
+                Date:2023-01-01 09:30
+                <button type="button" onclick="">수정</button>							
+                <button type="button" onclick="">삭제</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="subject">블라블라 블라블라..</td>
+        </tr>
+    </table>
+    <table id="boardTable">
+        <tr>
+            <td>10</td>
+            <td>Writer:낙짜샘</td>
+            <td>
+                Date:2023-01-01 09:30
+                <button type="button" onclick="">수정</button>							
+                <button type="button" onclick="">삭제</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="subject">블라블라 블라블라..</td>
+        </tr>
+    </table>
+    <!-- 반복 -->
+    <!-- 작성폼 -->
+    <form>
+        <table>
+            <tr>
+                <td>Writer : <input type="text" size="40"></td>
+                <td rowspan="2"><input type="submit" value="댓글작성" id="btn"></td>
+            </tr>
+            <tr>
+                <td><textarea name="" cols="51" rows="5"></textarea></td>
+            </tr>
+        </table>        
+    </form>
+</body>
+</html>

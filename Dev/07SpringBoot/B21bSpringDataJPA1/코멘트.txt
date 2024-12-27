@@ -1,0 +1,6 @@
+jpaboard
+  idx
+  subject
+  contents
+  postdate
+ 

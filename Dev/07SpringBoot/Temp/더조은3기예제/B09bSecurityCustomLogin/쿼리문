@@ -1,0 +1,23 @@
+drop table security_admin;
+create table security_admin (
+    user_id varchar2(30) primary key,
+    user_pw varchar2(200) not null,
+    authority varchar2(20) default 'ROLE_USER',
+    enabled number(1) default 1
+);
+--일반회원(user) 권한
+insert into security_admin values ('user1', '1234', 'ROLE_USER', 1);
+insert into security_admin values ('user2', '1234', 'ROLE_USER', 0);    
+--관리자(admin) 권한 
+insert into security_admin values ('admin1', '1234', 'ROLE_ADMIN', 1);    
+insert into security_admin values ('admin2', '1234', 'ROLE_ADMIN', 0);   
+commit;
+select * from security_admin;
+
+ 
+--회원 전체의 패스워드를 업데이트 한다. 
+update security_admin set user_pw='$2a$10$Ni30kg55QCsfK7RltXBOh.q8gWOr0iC4I90P1ckv2ooYQ2D0puBty';
+select * from security_admin;
+commit;
+
+

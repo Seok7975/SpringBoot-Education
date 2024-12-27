@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence 
+                        https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+    version="3.0"> 
+	<!--  
+	Java VM에 생성되는 영속성(Persistance) 개체의 이름을 MyJPA로 설정. 
+	-->
+    <persistence-unit name="MyJPA" transaction-type="RESOURCE_LOCAL">
+    	<!-- 엔티티로 사용할 클래스의 풀 경로(이 부분을 변경하면서 진행할것임) -->
+    	<class>myjpa4.Member4</class>
+    
+    	<!-- 명시적으로 나열된 클래스들만 엔티티로 인식 -->
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+        	<!-- 필수 : 데이터베이스 접속 정보 -->
+            <property name="jakarta.persistence.jdbc.driver"
+            			value="oracle.jdbc.OracleDriver" />
+            <property name="jakarta.persistence.jdbc.url"
+            			value="jdbc:oracle:thin:@localhost:1521:xe" />
+            <property name="jakarta.persistence.jdbc.user" 
+            			value="musthave" />
+            <property name="jakarta.persistence.jdbc.password" 
+            			value="1234" />
+            
+            <!--  
+            SQL방언(dialect)
+            -->            
+            <property name="hibernate.dialect" 
+            	value="org.hibernate.dialect.OracleDialect" />
+            
+			<!-- 옵션 -->
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.id.new_generator_mappings" 
+            			value="true" />
+            
+            <!-- 
+            테이블 수정 및 삭제와 관련된 사용할 수 있는 옵션 
+            -->            
+            <property name="hibernate.hbm2ddl.auto" value="none" />
+        </properties>
+    </persistence-unit>
+</persistence>
+

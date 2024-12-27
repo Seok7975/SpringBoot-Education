@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.edu.springboot.jdbc.IMemberService">
+ 
+	<!-- <select id="select" resultType="com.edu.springboot.jdbc.MemberDTO"> 
+		SELECT * FROM member ORDER BY regidate DESC
+	</select> -->
+	<!--  
+		조건문 <if>태그 : test절에 조건을 추가한다. 전체적인 사용법은
+			EL, JSTL과 동일하다. 
+		반복문 <foreach>태그
+			collection : 반복을 위해 사용할 컬렉션 변수명을 추가
+			item : 반복시 해당 루프에서 반환되는 객체
+			open : 쿼리문의 시작 부분에 추가할 항목
+			close : 종료 부분에 추가할 항목
+			separator : 쿼리문 반복시 구분자로 사용할 항목 
+	-->
+	<select id="select" parameterType="com.edu.springboot.jdbc.MemberDTO" 
+			resultType="com.edu.springboot.jdbc.MemberDTO"> 
+		select * from member 
+		<!--  
+		파라미터의 형식이
+			요청명?searchKeyword=abc => 값이 있음
+			요청명?searchKeyword=	 => 빈값으로 지정됨. 따라서 ''로 체크
+			요청명 					 => null로 지정됨. 따라서 null인지 체크 
+		-->
+		<if test="searchKeyword!=null and !searchKeyword.equals('')" >
+			where
+			<!-- like쿼리문을 or로 연결해서 2개 이상의 쿼리문을 구성한다. -->
+			<foreach collection="searchField" item="sfield" open="(" close=")" 
+				separator="or">
+				${sfield} like '%'||#{searchKeyword}||'%'
+			</foreach>	
+		</if>
+		order by regidate desc
+	</select>
+	
+	<!--  
+	회원등록처리 : request내장객체를 통해 받은 파라미터를 개별적으로 전달한
+		값으로 인파라미터를 채워준다. 이 경우 별도의 DTO객체를 사용하지 
+		않으므로 parameterType속성은 없어도 된다. 
+		insert(String id, String pass, String name) 
+		추상메서드는 위와 같이 3개의 파라미터를 전달하므로 순서대로
+		param1, 2 .. 과 같이 인파라미터를 설정할 수 있다. 
+	--> 
+	<insert id="insert"> 
+		INSERT INTO member (id, pass, name) VALUES 
+			(#{param1}, #{param2}, #{param3})
+	</insert> 
+	
+	<!--  
+	회원정보불러오기 : 파라미터를 받은 후 @Param 어노테이션으로 이름을
+		변경해서 전달한다. Mapper에서는 변경된 이름으로 인파라미터를 
+		설정할 수 있다. 
+	-->
+	<select id="selectOne" resultType="com.edu.springboot.jdbc.MemberDTO"> 
+		SELECT * FROM member WHERE id=#{_id}
+	</select> 
+	
+	<!--  
+	수정처리 : Map컬렉션에 저장된 파라미터를 받으므로 parameterType을 
+		Map으로 명시한다. 이 경우에는 패키지의 풀경로를 사용해야한다.
+		그리고 Key로 저장된 값을 얻어온 후 인파라미터를 설정할 수 있다. 
+	-->
+	<update id="update" parameterType="java.util.HashMap"> 
+		UPDATE member SET pass=#{m_pass}, name=#{m_name} WHERE id=#{m_id}
+	</update> 
+	
+	<!--  
+	삭제처리 : 파라미터 순서대로 배열처럼 0, 1, 2...와 같이 사용할 수 있다. 
+	-->
+	<delete id="delete"> 
+		delete from member where id=#{0}
+	</delete> 
+	
+</mapper>
+ 

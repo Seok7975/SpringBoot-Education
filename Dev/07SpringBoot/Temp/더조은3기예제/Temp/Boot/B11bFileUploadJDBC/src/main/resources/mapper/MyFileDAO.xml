@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.edu.springboot.jdbc.IMyFileService">
+	<insert id="insertFile" 
+		parameterType="com.edu.springboot.jdbc.MyFileDTO">
+		INSERT INTO myfile (idx, title, cate, ofile, sfile)
+		VALUES (seq_board_num.nextval, #{title}, #{cate}, 
+					#{ofile}, #{sfile})
+	</insert>
+
+
+	<select id="fileList">
+		
+	</select>
+	 
+	 	 
+</mapper>
+
+

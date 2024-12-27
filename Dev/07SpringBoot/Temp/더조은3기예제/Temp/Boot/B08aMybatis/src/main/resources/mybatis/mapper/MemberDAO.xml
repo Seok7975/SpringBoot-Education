@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Mapper파일을 구성하기 위한 Doctype 설정 -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 컨트롤러와 Mapper사이에서 매개역할을 하는 서비스 인터페이스를 
+namespace로 지정한다. xml파일에서는 클래스에 대한 import가 불가능 하므로
+아래와 같이 패키지의 풀경로로 작성해야한다. -->
+<mapper namespace="com.edu.springboot.jdbc.IMemberService"> 
+ 	
+ 	<!--  
+ 	매퍼에서 쿼리문을 실행하기 위한 엘리먼트 
+ 	: DML의 4가지 쿼리와 동일한 이름의 엘리먼트가 존재한다. 
+ 	즉 select 쿼리는 <select> 엘리먼트를 사용하면된다. 
+ 	
+ 	엘리먼트에서 사용하는 속성
+ 	-id : 컨트롤러에서 호출하기 위한 메서드명을 기술한다. Java와 같이 메서드의
+ 		원형을 사용하지 않고, 단지 메서드명만 명시하면 된다.  
+ 	-resultType : 쿼리문 실행 후 반환할 결과의 타입을 명시한다. select문의 
+ 		경우 ResultSet이 반환되므로 이를 저장하기 위한 DTO를 지정하면되고
+ 		갯수가 많은 경우 Mapper가 알아서 List에 add()해준다.
+ 		insert, delete, update와 같이 행의 변화가 일어나는 쿼리문은 결과로 
+ 		int형의 값을 반환하므로 resultType을 명시하지 않는다.
+ 	-parameterType : 메서드 호출시 파라미터로 사용할 객체를 명시한다. 
+ 		개발자가 직접 정의한 객체외에도 Map과 같은 컬렉션을 사용할 수 있다. 
+ 		그 외 명시하지 않는 경우도 있다.('여러가지 파라미터' 예제에서 확인)  
+ 	-->
+ 	
+ 	<!-- 회원목록 출력하기 : select 쿼리를 통해 인출한 레코드를 DTO에 저장한 
+ 	후 List컬렉션에 add() 하여 컨트롤러로 반환한다. --> 	 
+	<select id="select"
+		resultType="com.edu.springboot.jdbc.MemberDTO"> 
+		select * from member order by regidate desc
+	</select>
+	
+	<!-- 회원등록 : 파라미터 타입으로 명시한 DTO객체의 멤버변수명을 통해 
+			SQL문의 인파라미터를 설정할 수 있다. EL과 동일하게 DTO 내부의 
+			getter()를 호출하여 값을 얻어오게된다. -->
+	<insert id="insert" 
+		parameterType="com.edu.springboot.jdbc.MemberDTO"> 
+		insert into member (id, pass, name) values 
+			(#{id}, #{pass}, #{name})
+	</insert> 
+	
+	<!-- 기존 회원정보 인출하기 -->
+	<select id="selectOne" 
+		parameterType="com.edu.springboot.jdbc.MemberDTO"
+		resultType="com.edu.springboot.jdbc.MemberDTO"> 
+		SELECT * FROM member WHERE id=#{id}
+	</select>
+	<!-- 회원정보 수정 처리하기 -->	
+	<update id="update" 
+		parameterType="com.edu.springboot.jdbc.MemberDTO"> 
+		update member set pass=#{pass}, name=#{name} 
+		where id=#{id}
+	</update> 
+	
+	<!-- 회원삭제 : 삭제 후 삭제된 행의 갯수를 int형으로 반환한다. -->
+	<delete id="delete" 
+		parameterType="com.edu.springboot.jdbc.MemberDTO"> 
+		delete from member where id=#{id}
+	</delete> 
+	
+</mapper>
+ 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.edu.springboot.jdbc.IBoardService">
+	<select id="getTotalCount" resultType="int" 
+	parameterType="com.edu.springboot.jdbc.ParameterDTO">
+		SELECT COUNT(*) from myboard
+		<if test="searchKeyword!=null 
+			and !searchKeyword.equals('')"> 
+		WHERE ${searchField} LIKE '%'||#{searchKeyword}||'%'
+		</if>
+	</select>
+	
+	<select id="listPage" 
+		resultType="com.edu.springboot.jdbc.BoardDTO"
+		parameterType="com.edu.springboot.jdbc.ParameterDTO">			
+		SELECT * FROM (
+		    SELECT Tb.*, rownum rNum FROM (
+		        SELECT * FROM myboard 
+		        <if test="searchKeyword!=null 
+		        	and !searchKeyword.equals('')"> 
+				WHERE ${searchField} LIKE 
+							'%'||#{searchKeyword}||'%'
+				</if>
+		        ORDER BY idx DESC
+		    ) Tb
+		)
+		WHERE rNum<![CDATA[>=]]>#{start} 
+					AND rNum<![CDATA[<=]]>#{end}		
+	</select>
+	<!--  
+	WHERE rNum BETWEEN #{start} AND #{end}
+	-->
+	 
+	<insert id="write">
+		INSERT INTO myboard (idx, name, title, content)
+		VALUES
+		(seq_board_num.nextval, #{_name}, #{_title}, #{_content}) 
+	</insert>
+	
+	<select id="view" resultType="com.edu.springboot.jdbc.BoardDTO" 
+		parameterType="com.edu.springboot.jdbc.BoardDTO">
+		SELECT * FROM myboard WHERE idx=#{idx}
+	</select>	
+	
+	<update id="visitCountPlus" 
+		parameterType="com.edu.springboot.jdbc.BoardDTO">
+		UPDATE myboard SET visitcount=visitcount+1 WHERE idx=#{idx}
+	</update>
+	
+	<update id="edit" parameterType="com.edu.springboot.jdbc.BoardDTO">
+		UPDATE myboard SET 
+		name=#{name}, title=#{title}, content=#{content}
+		WHERE idx=#{idx}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM myboard WHERE idx=#{param1}
+	</delete>
+	 	 
+</mapper>

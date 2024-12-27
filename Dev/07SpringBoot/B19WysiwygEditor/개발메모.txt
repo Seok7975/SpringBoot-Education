@@ -1,0 +1,16 @@
+/BxxNaverSmartEditor/src/main/resources/static/se2/sample/photo_uploader/photo_uploader.html
+파일업로드 폼
+61라인 : <input type="file" class="upload" id="uploadInputBox" name="Filedata">
+  id 와 name 확인
+
+59라인 : <form> 태그의 action속성 = FileUploader.php
+            
+332라인 : html5Upload() 
+  HTML5 DragAndDrop으로 사진을 추가하고, 확인버튼을 누른 경우에 동작한다.
+  이 함수 내부의 for문에서 callAjaxForHTML5(tempFile,sUploadURL); 을 반복호출..
+
+353라인 : callAjaxForHTML5()
+
+
+
+
